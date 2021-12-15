@@ -6,6 +6,7 @@ import firebase from "../../firebaseConfig/firebase.config";
 export default function Home() {
     const [blogs,setBlogs]=useState([])
     const [admins,setAdmins]=useState([])
+    const [posts,setPosts]=useState([])
 
 const fetchBlogs=async()=>{
   const response=firebase.firestore().collection('Users');
@@ -23,9 +24,21 @@ const Admins=async()=>{
    setAdmins([...admins,admins.push(item.data())])
   })
 }
+
+const Posts=async()=>{
+  const response=firebase.firestore().collection('Posts');
+  const data=await response.get();
+  data.docs.forEach(item=>{
+      console.log(item.data());
+   setPosts([...posts,posts.push(item.data())])
+  })
+}
+
+
 useEffect(() => {
   fetchBlogs();
   Admins();
+  Posts();
   // console.log(blogs);
 }, [])
     return (
@@ -47,7 +60,7 @@ useEffect(() => {
       <img src="https://icon-library.com/images/new-post-icon/new-post-icon-7.jpg" className="card-img-top" alt="..."/>
       <div className="card-body">
         <h5 className="card-title">Posts</h5>
-        <p className="card-text">you have 200 Posts From your Users</p>
+        <p className="card-text">you have {posts.length} Posts From your Users</p>
       </div>
     </div>
   </div>

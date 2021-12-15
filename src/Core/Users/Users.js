@@ -89,6 +89,7 @@ export default function Users() {
     const submitLogin = (e) => {
    
       firebase.firestore().collection("Users").doc(user.ID).update(user) ;
+      console.log(user.ID)
     setUser({
       firstName: "",
       lastName: "",

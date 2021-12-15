@@ -33,7 +33,7 @@ const onLogout=()=>{
       {/* <Link to="/" className="mx-3">l</Link> */}
       <Link to="/register" className="mx-3" style={{textDecoration:"none",color:"white"}}>register</Link>
       <Link to="/users" className="mx-3"style={{textDecoration:"none",color:"white"}}>Users</Link>
-      <Link to="" className="mx-3"style={{textDecoration:"none",color:"white"}}>Posts</Link>
+      <Link to="/posts" className="mx-3"style={{textDecoration:"none",color:"white"}}>Posts</Link>
       <Link to="/" className="mx-3"style={{textDecoration:"none",color:"white"}}>Jobs</Link>
       <Link to="/admins" className="mx-3"style={{textDecoration:"none",color:"white"}}>Admins</Link>
       <a  className="mx-3"style={{textDecoration:"none",color:"white"}}>|</a>
