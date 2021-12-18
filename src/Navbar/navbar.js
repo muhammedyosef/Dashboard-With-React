@@ -25,11 +25,12 @@ const onLogout=()=>{
   console.log(admin);
 }
     return (
-        <div>
+        <div className='row'>
+          <div className='col-12'>
             <Navbar bg="dark" variant="dark">
     <Container>
     <Navbar.Brand href="/home">Dashboard</Navbar.Brand>
-    <Nav className=" d-flex justify-content-between">
+    <Nav className=" d-flex justify-content-between ">
       {/* <Link to="/" className="mx-3">l</Link> */}
       <Link to="/register" className="mx-3" style={{textDecoration:"none",color:"white"}}>register</Link>
       <Link to="/users" className="mx-3"style={{textDecoration:"none",color:"white"}}>Users</Link>
@@ -44,7 +45,7 @@ const onLogout=()=>{
     
     </Container>
   </Navbar> 
-
+  </div>
         </div>
     )
 }

@@ -7,7 +7,7 @@ export default function Posts() {
     const [posts, setPosts] = useState([])
     const [id, setId] = useState("")
     const [post, setPost] = useState({
-        name: "",
+        Name: "",
         body: "",
     });
 
@@ -15,10 +15,11 @@ export default function Posts() {
         const response = firebase.firestore().collection('Posts');
         const data = await response.get();
         data.docs.forEach(item => {
-            setId(item.id);
-            console.log(id)
-            console.log(item.data());
-            setPosts([...posts, posts.push(item.data())])
+            // setId(item.id);
+           
+            const data= item.data();
+            data["idi"]=item.id;
+            setPosts([...posts, posts.push(data)])
         })
         setPosts(posts);
     }
@@ -28,19 +29,21 @@ export default function Posts() {
         fetchPosts();
     }, [])
 
-    const deletePost = (e) => {
-        firebase.firestore().collection("Posts").doc(id).delete()
+    const deletePost = (idi) => {
+        firebase.firestore().collection("Posts").doc(idi).delete()
+     
     }
 
     const updatePost = (e) => {
         setPost(e)
+        setId(e.idi);
     }
 
     const handleInputChange = (e) => {
-        if (e.target.name === "name") {
+        if (e.target.name === "Name") {
             setPost({
                 ...post,
-                name: e.target.value,
+                Name: e.target.value,
             });
         } else if (e.target.name === "body") {
             setPost({
@@ -55,7 +58,7 @@ export default function Posts() {
 
         firebase.firestore().collection("Posts").doc(id).update(post);
         setPost({
-            name: "",
+            Name: "",
             body: "",
         })
         console.log(post)
@@ -76,8 +79,8 @@ export default function Posts() {
                         <input
                             type="text"
                             className="form-control"
-                            name="lastName"
-                            value={post.name}
+                            name="Name"
+                            value={post.Name}
                             onChange={(e) => handleInputChange(e)}
                         />
                     </div>
@@ -120,11 +123,11 @@ export default function Posts() {
                         return (
                             <tr key={index}>
                                 <th>{index + 1}</th>
-                                <td>{post.name}</td>
+                                <td>{post.Name}</td>
                                 <td>{post.body}</td>
                                 <td>
                                     <button type="button" className="btn btn-warning mx-2" onClick={() => updatePost(post)}>Update</button>
-                                    <button type="button" className="btn btn-danger " onClick={() => deletePost(post.id)}>Delete</button>
+                                    <button type="button" className="btn btn-danger " onClick={() => deletePost(post.idi)}>Delete</button>
                                 </td>
 
                             </tr>
