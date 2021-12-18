@@ -5,9 +5,10 @@ import firebase from "../../firebaseConfig/firebase.config";
 export default function Posts() {
 
     const [posts, setPosts] = useState([])
-    const [id, setId] = useState("")
+    const [posts1, setPosts1] = useState([])
+    const [newId, setNewId] = useState('')
     const [post, setPost] = useState({
-        name: "",
+        Name: "",
         body: "",
     });
 
@@ -15,12 +16,12 @@ export default function Posts() {
         const response = firebase.firestore().collection('Posts');
         const data = await response.get();
         data.docs.forEach(item => {
-            setId(item.id);
-            console.log(id)
+            setNewId(item.id);
+            console.log(newId)
             console.log(item.data());
             setPosts([...posts, posts.push(item.data())])
         })
-        setPosts(posts);
+        setPosts1(posts);
     }
 
 
@@ -29,18 +30,20 @@ export default function Posts() {
     }, [])
 
     const deletePost = (e) => {
-        firebase.firestore().collection("Posts").doc(id).delete()
+        console.log(e);
+        firebase.firestore().collection("Posts").doc(newId).delete()
     }
 
     const updatePost = (e) => {
+        console.log(e)
         setPost(e)
     }
 
     const handleInputChange = (e) => {
-        if (e.target.name === "name") {
+        if (e.target.name === "Name") {
             setPost({
                 ...post,
-                name: e.target.value,
+                Name: e.target.value,
             });
         } else if (e.target.name === "body") {
             setPost({
@@ -52,13 +55,12 @@ export default function Posts() {
 
 
     const submit = (e) => {
-
-        firebase.firestore().collection("Posts").doc(id).update(post);
+        firebase.firestore().collection("Posts").doc(newId).update(post);
         setPost({
-            name: "",
+            Name: "",
             body: "",
         })
-        console.log(post)
+        console.log(post.ID)
     };
 
     return (
@@ -76,8 +78,8 @@ export default function Posts() {
                         <input
                             type="text"
                             className="form-control"
-                            name="lastName"
-                            value={post.name}
+                            name="Name"
+                            value={post.Name}
                             onChange={(e) => handleInputChange(e)}
                         />
                     </div>
@@ -93,21 +95,17 @@ export default function Posts() {
                             onChange={(e) => handleInputChange(e)}
                         />
                     </div>
-
                     <button type="button" className="btn btn-primary" onClick={(e) => submit(e)}>
                         Update
                     </button>
-
                 </form>
                 <br />
                 <br />
             </div>
-
             <br />
 
             <table className="table">
                 <thead>
-
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Name</th>
@@ -116,21 +114,19 @@ export default function Posts() {
                     </tr>
                 </thead>
                 <tbody>
-                    {posts.map((post, index) => {
+                    {posts1.map((post, index) => {
                         return (
                             <tr key={index}>
                                 <th>{index + 1}</th>
-                                <td>{post.name}</td>
+                                <td>{post.Name}</td>
                                 <td>{post.body}</td>
                                 <td>
                                     <button type="button" className="btn btn-warning mx-2" onClick={() => updatePost(post)}>Update</button>
-                                    <button type="button" className="btn btn-danger " onClick={() => deletePost(post.id)}>Delete</button>
+                                    <button type="button" className="btn btn-danger " onClick={() => deletePost(post.ID)}>Delete</button>
                                 </td>
-
                             </tr>
                         );
                     })}
-
                 </tbody>
             </table>
         </>
