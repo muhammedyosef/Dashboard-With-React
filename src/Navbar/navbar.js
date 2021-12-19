@@ -50,7 +50,7 @@ export default function NavBar() {
               Posts
             </Link>
             <Link
-              to="/jobs"
+              to="/Jobs"
               className="mx-3"
               style={{ textDecoration: "none", color: "white" }}
             >

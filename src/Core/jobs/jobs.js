@@ -14,6 +14,7 @@ export default function Users() {
     employees: "",
     jobDesc: "",
     jopaddress: "",
+    About: "",
   });
 
   const fetchBlogs = async () => {
@@ -44,7 +45,10 @@ export default function Users() {
     //   });
     console.log(e);
   };
-
+  const submitLogin = () => {
+    firebase.firestore().collection("jobs").add(job);
+    clear();
+  };
   const FillData = (e) => {
     SetJob(e);
   };
@@ -54,7 +58,7 @@ export default function Users() {
       alert("Document successfully Updated!");
       console.log(e);
     } else {
-      alert("Error Updated document: ");
+      firebase.firestore().collection("jobs").doc(e.ID).update(job);
       console.log(e);
     }
     clear();
@@ -62,6 +66,7 @@ export default function Users() {
 
   const clear = () => {
     SetJob({
+      About: "",
       ID: "",
       joptitle: "",
       namecompany: "",
@@ -100,6 +105,11 @@ export default function Users() {
       SetJob({
         ...job,
         namecompany: e.target.value,
+      });
+    } else if (e.target.name === "About") {
+      SetJob({
+        ...job,
+        About: e.target.value,
       });
     } else if (e.target.name === "joptype") {
       SetJob({
@@ -162,9 +172,10 @@ export default function Users() {
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
-              joptitle
+              job title
             </label>
             <input
+              placeholder="Front end / backend/ fullstack/ mobil ......."
               type="text"
               className="form-control"
               name="joptitle"
@@ -178,6 +189,7 @@ export default function Users() {
               Name Company
             </label>
             <input
+              placeholder="Name"
               type="text"
               className="form-control"
               name="namecompany"
@@ -187,9 +199,10 @@ export default function Users() {
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" className="form-label">
-              joptype
+              job type
             </label>
             <input
+              placeholder="Full Time /part / Remote..... "
               type="text"
               className="form-control"
               name="joptype"
@@ -200,9 +213,10 @@ export default function Users() {
           </div>
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" class="form-label">
-              PhoneCompany
+              Phone Company
             </label>
             <input
+              placeholder="+0129(-23)83478"
               type="text"
               className="form-control"
               onChange={(e) => handleInputChange(e)}
@@ -217,6 +231,7 @@ export default function Users() {
             </label>
             <input
               type="text"
+              placeholder="Senior / junoir ......."
               className="form-control"
               onChange={(e) => handleInputChange(e)}
               name="contract"
@@ -228,6 +243,7 @@ export default function Users() {
               Number Of employees
             </label>
             <input
+              placeholder=" ex: From 1000 t0 3000"
               type="text"
               className="form-control"
               onChange={(e) => handleInputChange(e)}
@@ -237,9 +253,10 @@ export default function Users() {
           </div>{" "}
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" class="form-label">
-              jobDesc
+              job Descriptions
             </label>
             <input
+              placeholder="job description"
               type="text"
               className="form-control"
               onChange={(e) => handleInputChange(e)}
@@ -249,9 +266,10 @@ export default function Users() {
           </div>{" "}
           <div className="mb-3">
             <label htmlFor="exampleInputPassword1" class="form-label">
-              jopaddress
+              job address
             </label>
             <input
+              placeholder="country / City"
               type="text"
               className="form-control"
               onChange={(e) => handleInputChange(e)}
@@ -259,6 +277,26 @@ export default function Users() {
               value={job.jopaddress}
             />
           </div>
+          <div className="mb-3">
+            <label htmlFor="exampleInputPassword1" class="form-label">
+              About Job
+            </label>
+            <input
+              placeholder="All Details"
+              type="text"
+              className="form-control"
+              onChange={(e) => handleInputChange(e)}
+              name="About"
+              value={job.About}
+            />
+          </div>
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={(e) => submitLogin(e)}
+          >
+            Save New
+          </button>
         </form>
         <br />
         <br />
@@ -268,16 +306,16 @@ export default function Users() {
         <thead>
           <tr>
             <th scope="col">ID</th>
-            <th scope="col">joptitle</th>
-            <th scope="col">jopaddress</th>
-            <th scope="col">PhoneCompany</th>
+            <th scope="col">job title</th>
+            <th scope="col">job address</th>
+            <th scope="col">Phone Company</th>
           </tr>
         </thead>
         <tbody>
           {JobsTable.map((listValue, index) => {
             return (
               <tr key={index}>
-                <th>{listValue.ID}</th>
+                <th>{index}</th>
                 <td>{listValue.joptitle}</td>
                 <td>{listValue.jopaddress}</td>
                 <td>{listValue.PhoneCompany}</td>
@@ -294,7 +332,7 @@ export default function Users() {
                     className="btn btn-warning mx-2"
                     onClick={() => ClearUpdateData(listValue)}
                   >
-                    Save
+                    Update
                   </button>
                   <button
                     type="button"

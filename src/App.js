@@ -22,7 +22,7 @@ function App() {
           <Route path="/login" exact component={Login} />
           <Redirect exact from="/" to="/home" />
           <PrivateRoute path="/home" exact component={Home} />
-          <PrivateRoute path="/jobs" exact component={Jobs} />
+          <PrivateRoute path="/Jobs" exact component={Jobs} />
           <PrivateRoute path="/users" exact component={Users} />
           <PrivateRoute path="/register" exact component={Register} />
           <PrivateRoute path="/admins" exact component={Admins} />
