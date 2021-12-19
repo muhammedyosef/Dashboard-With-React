@@ -7,6 +7,7 @@ import Admins from "./Core/Admins/Admins";
 import Home from "./Core/Home/home";
 import Posts from "./Core/Posts/Posts";
 import Users from "./Core/Users/Users";
+import Jobs from "./Core/jobs/jobs";
 import PrivateRoute from "./Routes/PrivateRoute";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <PrivateRoute path="/home" exact component={Home}/>
       <PrivateRoute path="/posts" exact component={Posts}/>
       <PrivateRoute path="/users" exact component={Users}/>
+      <PrivateRoute path="/Jobs" exact component={Jobs} />
       <PrivateRoute path="/register" exact component={Register}/>
       <PrivateRoute path="/admins" exact component={Admins}/>
     </Switch>
