@@ -82,6 +82,7 @@ export default function Posts() {
                             name="Name"
                             value={post.Name}
                             onChange={(e) => handleInputChange(e)}
+                            readOnly
                         />
                     </div>
                     <div className="mb-3">

@@ -183,7 +183,7 @@ export default function Register() {
     <>
       <NavBar></NavBar>
       <br />
-      <h2> Register</h2>
+      <h2> Add Admin</h2>
       <br />
       <div className="col-md-6 col-sm-12" style={{ width: "600px", marginLeft: "29%" }}>
         <form onSubmit={(e) => submitLogin(e)}>
@@ -255,7 +255,7 @@ export default function Register() {
           </div>
 
           <button type="submit" className="btn btn-primary">
-            Register
+            Add Admin
           </button>
         </form>
         <br />
